@@ -13,7 +13,7 @@ class Contact {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.birthDate = birthDate;
-        this.age = birthDate + 12;
+        this.age = this.convertDateTOAge(birthDate);
         Contact.count++
     }
 
@@ -53,7 +53,7 @@ class Contact {
 
     set setBirthDate(birthDate) {
         this.birthDate = birthDate;
-        this.age = birthDate + 15;
+        this.age = this.convertDateTOAge(birthDate);
     }
 
     static get getCountry() {
@@ -69,6 +69,13 @@ class Contact {
                 + `Phone Number: ${this.phoneNumber}\n`
                 + `Date of Birth: ${this.birthDate}\n`
                 + `Age: ${this.age}\n`);
+    }
+
+    convertDateTOAge(birthDate) {
+        const [day, month, year] = birthDate.split("-");
+        const dob = new Date(year, month - 1, day);
+        const ageInMillisec = (new Date()).valueOf() - dob.valueOf();
+        return Math.floor(ageInMillisec / 31536000000);
     }
 
 }
